@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/gojou/bones/pkg/handlers"
+	"github.com/gojou/contacts/pkg/handlers"
 	"github.com/gorilla/mux"
 )
 
