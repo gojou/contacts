@@ -1,5 +1,7 @@
 package handlers
 
+// DO NOT DELETE -- handlers utilities
+
 import (
 	"html/template"
 	"net/http"
