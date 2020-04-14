@@ -3,6 +3,8 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+
+	"github.com/gojou/contacts/pkg/handlers/util"
 )
 
 //Contact displays the contact page
@@ -12,6 +14,6 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 		"static/html/contact.html",
 	))
 
-	xecute(page, w, r)
+	util.Xecute(page, w, r)
 
 }

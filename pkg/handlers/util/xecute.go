@@ -1,4 +1,4 @@
-package handlers
+package util
 
 // DO NOT DELETE -- handlers utilities
 
@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-func xecute(t *template.Template, w http.ResponseWriter, r *http.Request) {
+// Xecute does things
+func Xecute(t *template.Template, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		t.Execute(w, nil)
 	}

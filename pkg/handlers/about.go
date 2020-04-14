@@ -3,6 +3,8 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+
+	"github.com/gojou/contacts/pkg/handlers/util"
 )
 
 //About displays the "About" page
@@ -12,6 +14,6 @@ func About(w http.ResponseWriter, r *http.Request) {
 		"static/html/about.html",
 	))
 
-	xecute(page, w, r)
+	util.Xecute(page, w, r)
 
 }

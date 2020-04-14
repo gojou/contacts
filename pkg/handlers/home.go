@@ -3,6 +3,8 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+
+	"github.com/gojou/contacts/pkg/handlers/util"
 )
 
 // Home displays the default "/" page
@@ -13,6 +15,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		"static/html/home.html",
 	))
 
-	xecute(page, w, r)
+	util.Xecute(page, w, r)
 
 }
