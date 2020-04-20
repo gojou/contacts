@@ -8,8 +8,5 @@ type Contact struct {
 	BirthYear  string `json:"birthyear"`
 	BirthMonth string `json:"birthmonth"`
 	BirthDay   string `json:"birthday"`
+	Email      string `json:"email"`
 }
-
-// Interfaces defining the methods that Contacts package will support
-
-//New Contact

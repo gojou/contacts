@@ -9,7 +9,7 @@ import (
 
 // Repo provides the hanger for database methods
 type repo struct {
-	db firestore.Client
+	db *firestore.Client
 }
 
 // Initdb connects to the Firestore database
