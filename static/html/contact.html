@@ -1,27 +1,30 @@
 {{ define "content" }}
+
 <div class="container">
   <h2>Contact Go Scouting</h2>
+
+
   <form actiion="/contact" method="POST" nonvalidate>
     <p />
-    <label for="id">ID: </label><br />
-    <input type="text" id="id" name="id">
+    <label for="id">ID: </label><br>
+    <input type="text" id="id" name="id" value="{{.ID}}">
     <p />
-    <label for="firstname">First Name: </label><br />
-    <input type="text" id="firstname" name="firstname">
+    <label for="firstname">First Name: </label><br>
+    <input type="text" id="firstname" name="firstname" placeholder="mark">
     <p />
-    <label for="lastname">Last Name: </label><br />
+    <label for="lastname">Last Name: </label><br>
     <input type="text" id="lastname" name="lastname">
     <p />
-    <label for="birthyear">Birth Year: </label><br />
+    <label for="birthyear">Birth Year: </label><br>
     <input type="text" id="birthyear" name="birthyear">
     <p />
-    <label for="birthmonth">Birth Month: </label><br />
+    <label for="birthmonth">Birth Month: </label><br>
     <input type="text" id="birthmonth" name="birthmonth">
     <p />
-    <label for="birthday">Birth Day: </label><br />
+    <label for="birthday">Birth Day: </label><br>
     <input type="text" id="birthday" name="birthday">
     <p />
-    <label for="email">Email: </label><br />
+    <label for="email">Email: </label><br>
     <input type="text" id="email" name="email">
     <p />
     <input type="submit" value="Submit Dorothy!">
