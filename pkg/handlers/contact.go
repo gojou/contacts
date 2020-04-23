@@ -1,21 +1,22 @@
 package handlers
 
 import (
-	"errors"
 	"html/template"
 	"log"
 	"net/http"
+
+	val9 "gopkg.in/go-playground/validator.v9"
 )
 
 // FormData stores field information in the case of a POST failure
 type FormData struct {
-	ID         string
-	FirstName  string
-	LastName   string
-	BirthYear  string
-	BirthMonth string
-	BirthDay   string
-	Email      string
+	ID         string `validate:"required"`
+	FirstName  string `validate:"required"`
+	LastName   string `validate:"required"`
+	BirthYear  string `validate:"omitempty,len=4"`
+	BirthMonth string `validate:"omitempty,len=2"`
+	BirthDay   string `validate:"omitempty,len=2"`
+	Email      string `json:"email" validate:"required"`
 }
 
 // Data for use in the form
@@ -35,36 +36,54 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 
 // ContactPost handles a POST from the Contact form
 func ContactPost(w http.ResponseWriter, r *http.Request) {
+	v := val9.New()
 	r.ParseForm()
+	c := FormData{}
 
 	for key, value := range r.Form {
 		if value[0] != "" {
 			log.Printf("key = %s -- value = %s", key, value[0])
 		}
 	}
+	c.ID = r.Form.Get("id")
+	c.FirstName = r.Form.Get("firstname")
+	c.LastName = r.Form.Get("lastname")
+	c.BirthYear = r.Form.Get("birthyear")
+	c.BirthMonth = r.Form.Get("birthmonth")
+	c.BirthDay = r.Form.Get("birthday")
+	c.Email = r.Form.Get("email")
 
-	data.ID = r.FormValue("id")
-	log.Printf("Final test, structure formdata.id = %s", data.ID)
+	verrs := v.Struct(c)
+	if verrs != nil {
+		for _, e := range verrs.(val9.ValidationErrors) {
+			log.Printf("Validator Error: %s", e)
+		}
+		data.ID = r.FormValue("id")
+		page := template.Must(template.ParseFiles(
+			"static/html/_base.html",
+			"static/html/contact.html",
+		))
+		page.Execute(w, data)
+	}
+
+	// TODO: save the form data to the database
+	// e:= repository.Commit(data)
+	// if e!=nil {} etc
+	data = FormData{}
+	// page := template.Must(template.ParseFiles(
+	// 	"static/html/_base.html",
+	// 	"static/html/contact.html",
+	// ))
+
+	executePage(w, data)
+}
+
+func executePage(w http.ResponseWriter, data FormData) {
 	page := template.Must(template.ParseFiles(
 		"static/html/_base.html",
 		"static/html/contact.html",
 	))
 
-	// validate returns a slice of errors if the form contains any invalid
-	// strings.
-	// TODO: Update contact.html to populate the VALID data from the original
-	// form submission.
-	if len(validate(data)) > 0 {
-		page.Execute(w, data)
-	} else {
-		// TODO: save the form data to the database
-		// e:= repository.Commit(data)
-		// if e!=nil {} etc
-		data = FormData{}
-		page.Execute(w, data)
-	}
-}
+	page.Execute(w, data)
 
-func validate(data FormData) (errs []error) {
-	return append(errs, errors.New("danger will robinson"))
 }
