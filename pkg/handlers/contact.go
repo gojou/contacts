@@ -19,18 +19,13 @@ type FormData struct {
 	Email      string `json:"email" validate:"required"`
 }
 
-// Data for use in the form
+// Data for use from the form
 var data FormData
 
 //Contact displays the contact page
 func Contact(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Entering the Contact form %s", data.ID)
-	page := template.Must(template.ParseFiles(
-		"static/html/_base.html",
-		"static/html/contact.html",
-	))
-
-	page.Execute(w, data)
+	executePage(w, data)
 
 }
 
@@ -59,23 +54,19 @@ func ContactPost(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Validator Error: %s", e)
 		}
 		data.ID = r.FormValue("id")
-		page := template.Must(template.ParseFiles(
-			"static/html/_base.html",
-			"static/html/contact.html",
-		))
-		page.Execute(w, data)
+		data.FirstName = r.FormValue("firstname")
+		data.LastName = r.FormValue("lastname")
+		data.BirthYear = r.FormValue("birthyear")
+		data.BirthMonth = r.FormValue("birthmonth")
+		data.BirthDay = r.FormValue("birthday")
+		data.Email = r.FormValue("email")
+
+		executePage(w, data)
+	} else {
+		data = FormData{}
+
+		executePage(w, data)
 	}
-
-	// TODO: save the form data to the database
-	// e:= repository.Commit(data)
-	// if e!=nil {} etc
-	data = FormData{}
-	// page := template.Must(template.ParseFiles(
-	// 	"static/html/_base.html",
-	// 	"static/html/contact.html",
-	// ))
-
-	executePage(w, data)
 }
 
 func executePage(w http.ResponseWriter, data FormData) {
