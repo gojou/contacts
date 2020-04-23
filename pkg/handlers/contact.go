@@ -16,7 +16,7 @@ type FormData struct {
 	BirthYear  string `validate:"omitempty,len=4"`
 	BirthMonth string `validate:"omitempty,len=2"`
 	BirthDay   string `validate:"omitempty,len=2"`
-	Email      string `json:"email" validate:"required"`
+	Email      string `validate:"required, email"`
 }
 
 // Data for use from the form
